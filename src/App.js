@@ -6,6 +6,7 @@ import './App.css'
 
 const App = () => {
   const [searchField, setSearchField] = React.useState('')
+  const [title, setTitle] = React.useState('')
   const [monsters, setMonsters] = React.useState([])
   const [filteredMonsters, setFilteredMonsters] = React.useState(monsters)
 
@@ -24,14 +25,20 @@ const App = () => {
 
   const onSearchChange = event => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
-
     setSearchField(searchFieldString)
+  }
+
+  const onTitleChange = event => {
+    const searchFieldString = event.target.value.toLocaleLowerCase()
+    setTitle(searchFieldString)
   }
 
   return (
     <div className='App'>
-      <h1 className='app-title'>Monsters Rolodex</h1>
+      <h1 className='app-title'>{title}</h1>
       <SearchBox onChangeHandler={onSearchChange} placeholder='search monsters' className='search-box' />
+      <br />
+      <SearchBox onChangeHandler={onTitleChange} placeholder='title' className='search-box' />
       <CardList monsters={filteredMonsters} className='card-list' />
     </div>
   )
