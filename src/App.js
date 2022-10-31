@@ -1,46 +1,47 @@
-import { Component } from 'react'
+import React from 'react'
 
 import { CardList, SearchBox } from './components'
 
 import './App.css'
 
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      monsters: [],
-      searchString: ''
-    }
-  }
+const App = () => {
+  const [searchField, setSearchField] = React.useState('')
+  const [title, setTitle] = React.useState('')
+  const [monsters, setMonsters] = React.useState([])
+  const [filteredMonsters, setFilteredMonsters] = React.useState(monsters)
 
-  onSearchChange = event => {
-    const searchString = event.target.value.toLocaleLowerCase()
-
-    this.setState(() => {
-      return { searchString }
-    })
-  }
-
-  componentDidMount() {
+  React.useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(json => json.json())
-      .then(users => this.setState(() => ({ monsters: users })))
+      .then(users => setMonsters(users))
+      .catch(e => console.log(e.message))
+  }, [])
+
+  React.useEffect(() => {
+    const newFilteredMonsters = monsters.filter(monster => monster.name.toLocaleLowerCase().includes(searchField))
+
+    setFilteredMonsters(newFilteredMonsters)
+  }, [monsters, searchField])
+
+  const onSearchChange = event => {
+    const searchFieldString = event.target.value.toLocaleLowerCase()
+    setSearchField(searchFieldString)
   }
 
-  render() {
-    const { monsters, searchString } = this.state
-    const { onSearchChange } = this
-
-    const filteredMonsters = monsters.filter(monster => monster.name.toLocaleLowerCase().includes(searchString))
-
-    return (
-      <div className='App'>
-        <h1 className='app-title'>Monsters Rolodex</h1>
-        <SearchBox onChangeHandler={onSearchChange} placeholder='search monsters' className='search-box' />
-        <CardList monsters={filteredMonsters} className='card-list' />
-      </div>
-    )
+  const onTitleChange = event => {
+    const searchFieldString = event.target.value.toLocaleLowerCase()
+    setTitle(searchFieldString)
   }
+
+  return (
+    <div className='App'>
+      <h1 className='app-title'>{title}</h1>
+      <SearchBox onChangeHandler={onSearchChange} placeholder='search monsters' className='search-box' />
+      <br />
+      <SearchBox onChangeHandler={onTitleChange} placeholder='title' className='search-box' />
+      <CardList monsters={filteredMonsters} className='card-list' />
+    </div>
+  )
 }
 
 export default App
