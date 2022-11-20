@@ -1,4 +1,4 @@
-import { Monster } from '../../App'
+import type { Monster } from '../../App'
 
 import './card.styles.css'
 
