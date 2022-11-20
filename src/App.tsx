@@ -1,36 +1,44 @@
 import React from 'react'
 
 import { CardList, SearchBox } from './components'
+import { getData } from './utils/data.utils'
 
 import './App.css'
+
+export type Monster = {
+  id: string
+  name: string
+  email: string
+}
 
 const App = () => {
   const [searchField, setSearchField] = React.useState('')
   const [title, setTitle] = React.useState('')
-  const [monsters, setMonsters] = React.useState([])
+  const [monsters, setMonsters] = React.useState<Monster[]>([])
   const [filteredMonsters, setFilteredMonsters] = React.useState(monsters)
 
   React.useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(json => json.json())
-      .then(users => setMonsters(users))
-      .catch(e => console.log(e.message))
+    const fetchUsers = async () => {
+      const users = await getData<Monster[]>('https://jsonplaceholder.typicode.com/users')
+      setMonsters(users)
+    }
+
+    fetchUsers()
   }, [])
 
   React.useEffect(() => {
     const newFilteredMonsters = monsters.filter(monster => monster.name.toLocaleLowerCase().includes(searchField))
-
     setFilteredMonsters(newFilteredMonsters)
   }, [monsters, searchField])
 
-  const onSearchChange = event => {
-    const searchFieldString = event.target.value.toLocaleLowerCase()
-    setSearchField(searchFieldString)
-  }
-
-  const onTitleChange = event => {
+  const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setTitle(searchFieldString)
+  }
+
+  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const searchFieldString = event.target.value.toLocaleLowerCase()
+    setSearchField(searchFieldString)
   }
 
   return (
@@ -39,7 +47,7 @@ const App = () => {
       <SearchBox onChangeHandler={onSearchChange} placeholder='search monsters' className='search-box' />
       <br />
       <SearchBox onChangeHandler={onTitleChange} placeholder='title' className='search-box' />
-      <CardList monsters={filteredMonsters} className='card-list' />
+      <CardList monsters={filteredMonsters} />
     </div>
   )
 }
