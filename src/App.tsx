@@ -13,7 +13,7 @@ export type Monster = {
 
 const App = () => {
   const [searchField, setSearchField] = React.useState('')
-  const [title, setTitle] = React.useState('')
+  const [title, setTitle] = React.useState('Monsters Rolodex')
   const [monsters, setMonsters] = React.useState<Monster[]>([])
   const [filteredMonsters, setFilteredMonsters] = React.useState(monsters)
 
