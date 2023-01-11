@@ -2,7 +2,7 @@
 
 exports[`expect to render Card component 1`] = `
 <div
-  className="сard-container"
+  className="card-container"
   key=""
 >
   <img

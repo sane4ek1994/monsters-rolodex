@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { CardList, SearchBox } from './components'
-import { getData } from './utils/data.utils'
+import { CardList, SearchBox } from '../components'
+import { getData } from '../utils/data.utils'
 
 import './App.css'
 
@@ -12,6 +12,7 @@ export type Monster = {
 }
 
 const App = () => {
+  const [counter, setCounter] = React.useState(0)
   const [searchField, setSearchField] = React.useState('')
   const [title, setTitle] = React.useState('Monsters Rolodex')
   const [monsters, setMonsters] = React.useState<Monster[]>([])
@@ -31,6 +32,8 @@ const App = () => {
     setFilteredMonsters(newFilteredMonsters)
   }, [monsters, searchField])
 
+  const incCounter = () => setCounter(counter => counter + 1)
+
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = event.target.value.toLocaleLowerCase()
     setTitle(searchFieldString)
@@ -43,6 +46,9 @@ const App = () => {
 
   return (
     <div className='App'>
+      <button onClick={incCounter} id='counter'>
+        counter++{counter}
+      </button>
       <h1 className='app-title'>{title}</h1>
       <SearchBox onChangeHandler={onSearchChange} placeholder='search monsters' className='search-box' />
       <br />
