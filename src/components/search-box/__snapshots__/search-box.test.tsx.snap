@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`expect to render search-box component 1`] = `
+<input
+  className=""
+  onChange={[Function]}
+  type="search"
+/>
+`;
