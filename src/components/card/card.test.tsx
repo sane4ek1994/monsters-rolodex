@@ -1,4 +1,4 @@
-import { shallow, mount, render } from 'enzyme'
+import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
 import { Card } from './card'
 

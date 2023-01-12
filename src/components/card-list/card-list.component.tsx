@@ -1,4 +1,4 @@
-import type { Monster } from '../../App'
+import type { Monster } from '../../app/App'
 
 import { Card } from '../card/card'
 
